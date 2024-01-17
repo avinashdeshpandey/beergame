@@ -9,8 +9,9 @@ RETAILER->WHOLESELLER->DISTRIBUTOR->MANUFACTURER
 
 
 YOU PLAY AS A RETAILER and you have to INPUT;
-  1) WEEKLY ORDER QUANTITY = in the given input-box and press Enter (you do this 40-times)
-  2) mean and standard devaiation for your customer demand (you may change this for every week or retain the same values)
+  1) WEEKLY ORDER QUANTITY (Q) = volume (Q) you want to order and press Enter (you do this 40-times)
+                             (This order (Q) has arrival-lead time of 1-week, i.e if you order in ith week, it will come after (i+1)th week)
+  3) mean and standard devaiation for your customer demand (you may change this for every week or retain the same values)
    
 Rest of the data is generated randomly
 
