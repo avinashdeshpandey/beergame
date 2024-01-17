@@ -13,6 +13,6 @@ YOU PLAY AS A RETAILER and you have to INPUT;
                              (This order (Q) has arrival-lead time of 1-week, i.e if you order in ith week, it will come after (i+1)th week)
   3) mean and standard devaiation for your customer demand (you may change this for every week or retain the same values)
    
-Rest of the data is generated randomly
+The data for wholeseller, distributor & manufacturer is generated randomly.
 
-As a retailer all you have to do is; enter ORDER
+
