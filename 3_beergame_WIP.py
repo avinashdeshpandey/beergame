@@ -1,19 +1,16 @@
 
-# ENV py31013
-# THIS IS dynamic tool:
-# # python -m streamlit run  D:\Projects_inDev\INVESTMENT_DSS\beergame_sample_example\3_beergame_WIP.py
 import os
 import streamlit as st
 import numpy as np
 import pandas as pd
 import scipy
-from scipy.optimize import minimize
 from scipy.stats import norm
 import random
 import matplotlib.pyplot as plt
 
-
-# #default paramtere
+###################################################################################################################################
+# USER PARAMETERS
+##################################################################################################################################
 IND_ALL_ECHELONS_COMMON_INFO = False
 iDISPLAY_FINAL_STATS = False
 iROLE = 0
@@ -22,6 +19,19 @@ supplier_lead_time = [1,1,1,1] # -1 => same week / instantaneous delivery# LETS 
 initial_stock = [15,15,15,15]
 initial_backlog = [0,0,0,0]
 cntfacility = [1,1,1,1]  # each number reprsents count of each facility, from left to right; 1-retialer, 1-wholeseller, 1-distributor & 1-manufacturer
+# COSTS
+ordering_or_setup_cost_perorder = 5  ## K like setup octs
+cost_per_unit = 15   # unit purchase cost
+storageOrHolding_cost_per_unit = 0.5
+shortageOrEmergencyOrBackordered_cost_per_unit = 1 # placed end of week and delievered instantaaneously
+
+
+
+###################################################################################################################################
+# DO NOT CHANGE ANYTHING BELOW THIS
+##################################################################################################################################
+
+## Decalring session varibles....
 
 if "incoming_demand" not in st.session_state:
     incoming_demand = [[],[],[],[]]
@@ -135,7 +145,7 @@ if "lst_eoq_ui" not in st.session_state:
 
 
 ## LETS ASSIGN session-state to variables
-##
+
 #mydata = st.session_state['mydata']
 counter = st.session_state['counter']
 incoming_demand = st.session_state['incoming_demand']
@@ -159,11 +169,7 @@ results3 = st.session_state['results3']
 
 
 
-# COSTS
-ordering_or_setup_cost_perorder = 5  ## K like setup octs
-cost_per_unit = 15   # unit purchase cost
-storageOrHolding_cost_per_unit = 0.5
-shortageOrEmergencyOrBackordered_cost_per_unit = 1 # placed end of week and delievered instantaaneously
+
 
 
 ## following objects will be required to track...scheduled EOQs vs whts actually delivered by upper echelon!
@@ -439,6 +445,9 @@ def fsimulatebeergame(isim,current_user_role,mu_sigma_eoq):
 
 
 
+##################################################################################
+# UI-BEGINS
+################################################################################
 
 
 st.set_page_config(layout="wide")
