@@ -3,8 +3,7 @@ This is a python based beer game simulation(wip) to demonstrate bullwhip effect.
 
 We are simulating 40-weeks.
 
-The supply chain consists of;
-
+The supply chain consists of 4-single player as follows;
 RETAILER->WHOLESELLER->DISTRIBUTOR->MANUFACTURER
 
 
