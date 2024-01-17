@@ -91,7 +91,7 @@ psutil==5.9.0
 pure-eval==0.2.2
 pyarrow==11.0.0
 pycparser==2.21
-pydeck==0.8.0b4
+pydeck<1
 Pygments==2.15.1
 Pympler==0.9
 pyOpenSSL==23.2.0
