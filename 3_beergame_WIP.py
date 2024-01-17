@@ -1,11 +1,12 @@
 
 # ENV py31013
 # THIS IS dynamic tool:
-# # python -m streamlit run  D:\Projects_inDev\INVESTMENT_DSS\3_beergame_WIP.py
+# # python -m streamlit run  D:\Projects_inDev\INVESTMENT_DSS\beergame_sample_example\3_beergame_WIP.py
 import os
 import streamlit as st
 import numpy as np
 import pandas as pd
+import scipy
 from scipy.optimize import minimize
 from scipy.stats import norm
 import random
