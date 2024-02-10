@@ -382,9 +382,12 @@ def fsimulatebeergame(isim,current_user_role,mu_sigma_eoq,iINDUCE_ARRIVAL_QTYS_V
 
 
             # HOW MUCH TO ORDER ?
-
+            usergiven_or_generate_eoq_decision = ""
             if iORDERGENMODE == 'Manual':
                 usergiven_or_generate_eoq_decision = np.max([user_ordered_eoq, 0])
+
+                # Lets save this generated EOQ for this entity
+                runtime_lstOflsts_eoq_qty_decision[user_role].append(usergiven_or_generate_eoq_decision)
 
             elif iORDERGENMODE == 'Auto':
                 # usergiven_or_generate_eoq_decision = np.max([stocks[user_role][isim],runtime_lstOflsts_incoming_demand[user_role][isim] * int(supplier_lead_time[user_role]), backlog[user_role][isim]])
@@ -395,17 +398,21 @@ def fsimulatebeergame(isim,current_user_role,mu_sigma_eoq,iINDUCE_ARRIVAL_QTYS_V
                 if stocks[user_role][isim] > 0:
                     usergiven_or_generate_eoq_decision = np.max([runtime_lstOflsts_incoming_demand[user_role][isim] * int(supplier_lead_time[user_role]) - stocks[user_role][isim], 0])
 
+                # Lets save this generated EOQ for this entity
+                runtime_lstOflsts_eoq_qty_decision[user_role].append(usergiven_or_generate_eoq_decision)
+
 
             elif iORDERGENMODE == 'Naive':
                 naive_eoq = runtime_lstOflsts_incoming_demand[user_role][isim] * int(supplier_lead_time[user_role]) - stocks[user_role][isim] - np.max([lstoflsts_pendingorders_today_scheduled[user_role][isim]-backlog[user_role][isim],0])
                 #generate_EOQ_to_order = np.max([stocks[user_role][isim], runtime_lstOflsts_incoming_demand[user_role][isim], backlog[user_role][isim]])
                 usergiven_or_generate_eoq_decision = np.max([naive_eoq,0])
+
+                # Lets save this generated EOQ for this entity
+                runtime_lstOflsts_eoq_qty_decision[user_role].append(usergiven_or_generate_eoq_decision)
+
             else:
                 print("ERROR: iORDERGENMODE value has to Manual or Naive or Auto.")
                 quit()
-
-            # Lets save this generated EOQ for this entity
-            runtime_lstOflsts_eoq_qty_decision[user_role].append(usergiven_or_generate_eoq_decision)
 
             # & WHEN will this EOQ order arrive ??? the lead-times are at least 1-week & therefoew it can be here below above section...
             outgoing_order_arrival_schedule[user_role][isim + int(supplier_lead_time[user_role]) + 1] = usergiven_or_generate_eoq_decision
@@ -520,10 +527,12 @@ def fsimulatebeergame(isim,current_user_role,mu_sigma_eoq,iINDUCE_ARRIVAL_QTYS_V
 
 
             # HOW MUCH TO ORDER ? this is by defauly Naive fornow
-            generate_EOQ_to_order=0
+            generate_EOQ_to_order = ""
             if iORDERGENMODE == 'Naive':
                 naive_eoq = runtime_lstOflsts_incoming_demand[user_role][isim] * int(supplier_lead_time[user_role]) - stocks[user_role][isim] - np.max([lstoflsts_pendingorders_today_scheduled[user_role][isim]-backlog[user_role][isim],0])
                 generate_EOQ_to_order = np.max([naive_eoq,0])
+                # Lets save this generated EOQ for this entity
+                runtime_lstOflsts_eoq_qty_decision[user_role].append(generate_EOQ_to_order)
 
             elif iORDERGENMODE in ['Auto','Manual']:
                 if backlog[user_role][isim] > 0:
@@ -533,12 +542,14 @@ def fsimulatebeergame(isim,current_user_role,mu_sigma_eoq,iINDUCE_ARRIVAL_QTYS_V
                 if stocks[user_role][isim] > 0:
                     generate_EOQ_to_order = np.max([runtime_lstOflsts_incoming_demand[user_role][isim] * int(supplier_lead_time[user_role]) - stocks[user_role][isim], 0])
 
+                # Lets save this generated EOQ for this entity
+                runtime_lstOflsts_eoq_qty_decision[user_role].append(generate_EOQ_to_order)
+
             else:
                 print("ERROR: non-user facility iORDERGENMODE value not found.")
                 quit()
 
-            # Lets save this generated EOQ for this entity
-            runtime_lstOflsts_eoq_qty_decision[user_role].append(generate_EOQ_to_order)
+
 
             # & WHEN will this EOQ order arrive ??? the lead-times are at least 1-week & therefoew it can be here below above section...
             outgoing_order_arrival_schedule[user_role][isim + int(supplier_lead_time[user_role]) + 1] = generate_EOQ_to_order
